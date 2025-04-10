@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farhad Hossain | Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400;700&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    body {
+      font-family: 'Roboto Slab', serif;
+      background: #F2F3F5; /* Medium light gray background */
+      color: #374151; /* Dark gray text */
+      min-height: 100vh;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+    }
+    .glass {
+      backdrop-filter: blur(16px);
+      background: rgba(255, 255, 255, 0.8);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+    }
+    .navbar {
+      transition: all 0.4s ease;
+    }
+    .navbar-sticky {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(229, 231, 235, 0.95); /* Light gray sticky */
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+    }
+    .nav-link {
+      position: relative;
+      padding-bottom: 4px;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 0;
+      background: #6b7280; /* Medium gray underline */
+      transition: width 0.3s ease;
+    }
+    .nav-link:hover::after {
+      width: 100%;
+    }
+    .gray-accent {
+      color: #4b5563; /* Slightly darker gray for headings */
+    }
+    .hover-lift {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .hover-lift:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+    }
+    .section-bg {
+      background: linear-gradient(135deg, #f3f4f6, #d1d5db); /* Light to medium gray gradient */
+    }
+    .header-bg {
+      background: linear-gradient(135deg, #d1d5db, #9ca3af); /* Medium to darker gray */
+    }
+    .footer-bg {
+      background: linear-gradient(135deg, #6b7280, #4b5563); /* Darker gray gradient */
+    }
+    @media (max-width: 768px) {
+      .nav-links {
+        display: none;
+        flex-direction: column;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        background: rgba(229, 231, 235, 0.95);
+        padding: 1rem;
+      }
+      .nav-links.active {
+        display: flex;
+      }
+      .menu-btn {
+        display: block;
+      }
+    }
+    @media (min-width: 769px) {
+      .menu-btn {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation Bar -->
+  <nav class="navbar py-6" id="navbar">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+      <a href="#home" class="text-3xl font-bold gray-accent">FARHAD</a>
+      <button class="menu-btn text-gray-800 text-2xl md:hidden" onclick="toggleMenu()">☰</button>
+      <div class="nav-links flex space-x-8 md:space-x-12">
+        <a href="#home" class="nav-link text-gray-600 hover:text-gray-800">Home</a>
+        <a href="#about" class="nav-link text-gray-600 hover:text-gray-800">About</a>
+        <a href="#skills" class="nav-link text-gray-600 hover:text-gray-800">Skills</a>
+        <a href="#projects" class="nav-link text-gray-600 hover:text-gray-800">Projects</a>
+        <a href="#contact" class="nav-link text-gray-600 hover:text-gray-800">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header id="home" class="text-center py-24 header-bg" data-aos="fade-in">
+    <div class="w-48 h-48 md:w-64 md:h-64 mx-auto rounded-full overflow-hidden border-4 border-gray-500 hover-lift">
+      <img src="C:\Users\farha\Downloads\Python\Test File\FB_IMG_1686991050656.jpg" alt="Farhad" class="w-full h-full object-cover">
+    </div>
+    <h1 class="text-4xl md:text-6xl font-bold mt-8 gray-accent" data-aos="zoom-in">MD.Farhad Hossen</h1>
+    <p class="text-lg md:text-2xl mt-4 text-gray-700" data-aos="fade-up" data-aos-delay="100">Mathematics Graduate • Data Analyst • Digital Creator • Volunteer </p>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="max-w-5xl mx-auto px-6 py-20 section-bg" data-aos="fade-up">
+    <h2 class="text-3xl md:text-4xl font-semibold gray-accent mb-8 text-center">About Me</h2>
+    <div class="glass p-8 rounded-2xl hover-lift">
+      <p class="text-gray-700 leading-relaxed text-lg md:text-xl">
+        I’m Farhad, a Mathematics student at Jahangirnagar University with a strong background in data analysis, documentation, and digital content creation. I have hands-on experience in tools such as Microsoft Office, SPSS, Kobo, and Python (Matplotlib) for data visualization.
+With leadership roles like Joint Secretary of the Student Association of Chuadanga and an Admin & HR internship at YSSE, I’ve developed strong organizational and reporting skills. I also create digital art and 3D animations for my YouTube channel. I am passionate about expanding my expertise in psychology, data analysis, and international research opportunities.
+      </p>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-20 section-bg" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-semibold gray-accent mb-8 text-center">Skills</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">MS Word</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">Excel</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">PowerPoint</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">Data Analyst</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">Event Photography</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">Graphic Design</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">Canva</div>
+        <div class="glass p-6 rounded-2xl hover-lift text-gray-800">Digital Art & Animation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="max-w-5x1 mx-auto px-6 py-20 section-bg" data-aos="fade-up">
+    <h2 class="text-3xl md:text-4xl font-semibold gray-accent mb-8 text-center">Projects & Experience</h2>
+    <div class="space-y-6">
+      <div class="glass p-8 rounded-2x1 hover-lift">
+        <p class="text-gray-800">📊 <strong>PhD Research Contribution:</strong> 
+          <a href="https://drive.google.com/drive/folders/14imS8j87ucLymSGJlkmwQ6K2NhPLW8-b?usp=drive_link" class="text-gray-600 hover:underline" target="_blank">Project Folder</a></p>
+      </div>
+      <div class="glass p-8 rounded-2x1 hover-lift">
+        <p class="text-gray-800">👔 <strong>YSSE Internship:</strong> Admin & HR Documentation – 
+          <a href="https://drive.google.com/drive/folders/1iWz2qrzMVT4Luf12ofr7CL_LbyYhojE1?usp=drive_link" class="text-gray-600 hover:underline" target="_blank">Project Folder</a></p>
+      </div>
+      <div class="glass p-8 rounded-2x1 hover-lift">
+        <p class="text-gray-800">📚 <strong>Boolean Algebra Report:</strong> Designed with Python and PowerPoint – 
+          <a href="https://drive.google.com/drive/folders/1pKEOv-2bP1QvvozyNvNNs47Fh66kst2O?usp=drive_link" class="text-gray-600 hover:underline" target="_blank">Project Folder</a></p>
+      </div>
+      <div class="glass p-8 rounded-2x1 hover-lift">
+        <p class="text-gray-800">🏛️ <strong>SAC-JU Activities:</strong> Organizational and creative work – 
+          <a href="https://drive.google.com/drive/folders/1EYBvjYUC_Wg092mrq78thN7Si3GFn267?usp=drive_link" class="text-gray-600 hover:underline" target="_blank">All Works</a></p>
+      </div>
+      <div class="glass p-8 rounded-2x1 hover-lift">
+        <p class="text-gray-800">🎨 <strong>Digital Art & Animation:</strong> 
+          <a href="https://www.youtube.com/@Bri-Studio" class="text-gray-600 hover:underline" target="_blank">Bri Studio (YouTube)</a></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20 section-bg" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto px-6">
+      <h2 class="text-3xl md:text-4xl font-semibold gray-accent mb-8 text-center">Contact Me</h2>
+      <ul class="glass p-8 rounded-2xl hover-lift space-y-4 text-lg text-gray-800">
+        <li>📧 <a href="mailto:farhad.stu2019@juniv.edu " class="text-gray-600 hover:underline">farhad.stu2019@juniv.edu </a></li>
+        <li>📱 <a href="tel:+8801731130949" class="text-gray-600 hover:underline">+8801731-130949  & +8801627-739293</a></li>
+        <li>🔗 <a href="https://www.linkedin.com/in/farhad-stu-math/" class="text-gray-600 hover:underline" target="_blank">LinkedIn</a></li>
+        <li>📺 <a href="https://www.youtube.com/@Bri-Studio" class="text-gray-600 hover:underline" target="_blank">YouTube</a></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 footer-bg text-white">
+    <p class="text-sm">© 2025 Farhad Hossain. All rights reserved.</p>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({ duration: 1200, once: true });
+
+    // Sticky Navbar
+    const navbar = document.getElementById('navbar');
+    const stickyOffset = navbar.offsetTop;
+
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset >= stickyOffset) {
+        navbar.classList.add('navbar-sticky');
+      } else {
+        navbar.classList.remove('navbar-sticky');
+      }
+    });
+
+    // Smooth scroll for nav links
+    document.querySelectorAll('.nav-link').forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+      });
+    });
+
+    // Toggle mobile menu
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      navLinks.classList.toggle('active');
+    }
+  </script>
+</body>
+</html>
