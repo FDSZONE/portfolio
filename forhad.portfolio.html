@@ -1,0 +1,848 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Farhad Hossain | Portfolio</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Poppins:wght@400;600;700&family=Roboto:wght@400;500&display=swap" rel="stylesheet" />
+  <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet" />
+  <style>
+    :root {
+      --primary: #3d2811;
+      --secondary: #56581a;
+      --bg: #f5f3e8; /* Unified cream off-white background */
+      --card-bg: rgba(255, 255, 255, 0.95);
+      --text-primary: #010916;
+      --text-secondary: #090113;
+      --footer-bg: #f5f3e8; /* Matching footer to cream */
+      --card-accent: rgba(255, 255, 255, 0.642);
+      --accent-gradient: linear-gradient(90deg, #b4bcd3, #ffdbbe);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text-primary);
+      min-height: 100vh;
+      scroll-behavior: smooth;
+      overflow-x: hidden;
+      line-height: 1.6;
+      perspective: 1000px;
+    }
+
+    /* 3D Card Styling */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--card-accent);
+      border-radius: 12px;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      transform-style: preserve-3d;
+    }
+
+    .card:hover {
+      transform: translateY(-10px) rotateX(10deg) rotateY(10deg) translateZ(20px);
+      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    }
+
+    /* 3D UI Navigation Bar */
+    .navbar {
+      position: fixed;
+      top: 20px;
+      width: 90%;
+      max-width: 1200px;
+      left: 50%;
+      transform: translateX(-50%) translateZ(0);
+      background: var(--card-bg);
+      border-radius: 12px;
+      z-index: 1000;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+    }
+
+    .navbar.scrolled {
+      transform: translateX(-50%) translateZ(30px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    }
+
+    .nav-link {
+      position: relative;
+      font-weight: 500;
+      color: var(--text-secondary);
+      padding: 0.75rem 1rem;
+      transition: transform 0.3s ease, color 0.3s ease;
+      transform-style: preserve-3d;
+      display: inline-block;
+    }
+
+    .nav-link:hover,
+    .nav-link.active {
+      color: var(--primary);
+      transform: rotateX(15deg) translateZ(15px);
+    }
+
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      background: var(--accent-gradient);
+      transition: width 0.3s ease;
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+      width: 80%;
+    }
+
+    /* 3D Button Styling */
+    .btn, .modal-button, .back-to-top {
+      position: relative;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 0.75rem 1.5rem;
+      border-radius: 8px;
+      background: var(--accent-gradient);
+      color: var(--text-primary);
+      font-weight: 500;
+      text-decoration: none;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transform-style: preserve-3d;
+      overflow: hidden;
+    }
+
+    .btn::before, .modal-button::before, .back-to-top::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+      transition: left 0.3s ease;
+    }
+
+    .btn:hover::before, .modal-button:hover::before, .back-to-top:hover::before {
+      left: 100%;
+    }
+
+    .btn:hover, .modal-button:hover, .back-to-top:hover {
+      transform: translateY(-5px) translateZ(15px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+
+    .btn:active, .modal-button:active, .back-to-top:active {
+      transform: translateY(0) translateZ(0);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    /* Hero Section */
+    .hero-bg {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg);
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+    }
+
+    .profile-img {
+      transition: transform 0.5s ease;
+      transform-style: preserve-3d;
+    }
+
+    .profile-img:hover {
+      transform: rotateY(20deg) rotateX(15deg) translateZ(30px);
+    }
+
+    /* Projects Section */
+    .project-card {
+      transform-style: preserve-3d;
+    }
+
+    .project-card:hover {
+      transform: translateY(-10px) rotateX(12deg) rotateY(12deg) translateZ(20px);
+    }
+
+    .project-icon {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 120px;
+      background: var(--accent-gradient);
+      font-size: 3rem;
+      color: var(--text-primary);
+      transform: translateZ(20px);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover .project-icon {
+      transform: translateZ(30px);
+    }
+
+    /* Section Headers */
+    .section-header {
+      position: relative;
+      display: inline-block;
+      margin-bottom: 2.5rem;
+      transform-style: preserve-3d;
+      color: var(--primary);
+      font-family: 'Poppins', sans-serif;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease;
+    }
+
+    .section-header:hover {
+      transform: translateZ(10px);
+    }
+
+    .section-header::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: var(--accent-gradient);
+      border-radius: 2px;
+      transition: width 0.4s ease;
+      transform: translateZ(5px);
+    }
+
+    .section-header:hover::after {
+      width: 100%;
+    }
+
+    /* Contact Section */
+    #contact {
+      background: var(--bg);
+      overflow: hidden;
+    }
+
+    .contact-bar {
+      display: grid;
+      gap: 1.5rem;
+      padding: 2rem;
+    }
+
+    .contact-item {
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border-radius: 15px;
+      padding: 1.5rem;
+      box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+      transform: translateZ(0);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .contact-item:hover {
+      transform: translateY(-10px) translateZ(20px);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    }
+
+    .contact-item .icon {
+      font-size: 2rem;
+      margin-right: 1.5rem;
+      color: var(--primary);
+      transition: transform 0.3s ease;
+    }
+
+    .contact-item:hover .icon {
+      transform: scale(1.2);
+    }
+
+    /* Modal Styling */
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.6);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+      perspective: 1000px;
+    }
+
+    .modal-content {
+      background: #fff;
+      border-radius: 20px;
+      padding: 2.5rem;
+      max-width: 450px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 15px 50px rgba(0, 0, 0, 0.3);
+      transform: rotateY(0deg);
+      transition: transform 0.5s ease;
+      position: relative;
+    }
+
+    .modal-content.show {
+      animation: flipIn 0.5s ease forwards;
+    }
+
+    @keyframes flipIn {
+      from {
+        transform: rotateY(-90deg);
+        opacity: 0;
+      }
+      to {
+        transform: rotateY(0deg);
+        opacity: 1;
+      }
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 1rem;
+      right: 1.5rem;
+      font-size: 2rem;
+      cursor: pointer;
+      color: #666;
+      transition: color 0.3s ease;
+    }
+
+    .modal-close:hover {
+      color: var(--primary);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 640px) {
+      .navbar {
+        width: 100%;
+        top: 0;
+        border-radius: 0;
+      }
+
+      .nav-links {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100vh;
+        background: rgba(1, 1, 1, 0.95);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        transform: translateZ(-100px);
+        opacity: 0;
+      }
+
+      .nav-links.active {
+        transform: translateZ(0);
+        opacity: 1;
+      }
+
+      .nav-link {
+        font-size: 1.75rem;
+        color: #fff;
+        margin: 1.5rem 0;
+        opacity: 0;
+        transform: translateZ(-30px);
+        transition: opacity 0.4s ease, transform 0.4s ease;
+      }
+
+      .nav-links.active .nav-link {
+        opacity: 1;
+        transform: translateZ(0);
+      }
+
+      .nav-links.active .nav-link:nth-child(1) { transition-delay: 0.1s; }
+      .nav-links.active .nav-link:nth-child(2) { transition-delay: 0.2s; }
+      .nav-links.active .nav-link:nth-child(3) { transition-delay: 0.3s; }
+      .nav-links.active .nav-link:nth-child(4) { transition-delay: 0.4s; }
+      .nav-links.active .nav-link:nth-child(5) { transition-delay: 0.5s; }
+
+      .menu-btn {
+        z-index: 1001;
+      }
+
+      .menu-btn.active::before {
+        content: '✕';
+      }
+
+      .hero-bg {
+        padding-top: 6rem;
+        padding-bottom: 4rem;
+      }
+
+      .profile-img {
+        width: 120px;
+        height: 120px;
+      }
+
+      .section-header {
+        font-size: 1.8rem;
+      }
+
+      .contact-bar {
+        padding: 1rem;
+        gap: 1rem;
+      }
+
+      .contact-item {
+        padding: 1rem;
+      }
+
+      .contact-item .icon {
+        font-size: 1.5rem;
+        margin-right: 1rem;
+      }
+    }
+
+    @media (min-width: 641px) {
+      .menu-btn {
+        display: none;
+      }
+
+      .nav-links {
+        display: flex !important;
+      }
+    }
+
+    @media (max-width: 768px) {
+      .grid-cols-3, .grid-cols-4 {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .modal-content {
+        padding: 2rem;
+        max-width: 350px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      h1 {
+        font-size: 2rem;
+      }
+
+      h2 {
+        font-size: 1.5rem;
+      }
+
+      .grid-cols-2 {
+        grid-template-columns: 1fr;
+      }
+
+      .modal-content h3 {
+        font-size: 1.5rem;
+      }
+
+      .modal-content p {
+        font-size: 1rem;
+      }
+
+      .modal-button {
+        padding: 0.7rem 1.5rem;
+        font-size: 1rem;
+      }
+    }
+
+    /* Back to Top Button */
+    .back-to-top {
+      position: fixed;
+      bottom: 2rem;
+      right: 2rem;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.4s ease;
+      z-index: 1000;
+    }
+
+    .back-to-top.show {
+      opacity: 1;
+      visibility: visible;
+      transform: rotateX(360deg) translateZ(10px);
+    }
+
+    /* Preloader */
+    .preloader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      transition: opacity 0.6s ease;
+    }
+
+    .preloader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .spinner {
+      width: 40px;
+      height: 40px;
+      border: 4px solid var(--secondary);
+      border-top: 4px solid var(--primary);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+      transform-style: preserve-3d;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg) rotateX(0deg); }
+      100% { transform: rotate(360deg) rotateX(360deg); }
+    }
+  </style>
+</head>
+<body>
+  <!-- Preloader -->
+  <div class="preloader" id="preloader">
+    <div class="spinner"></div>
+  </div>
+
+  <!-- 3D Navigation Bar -->
+  <nav class="navbar py-4" id="navbar" aria-label="Main navigation">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center">
+      <a href="#home" class="text-2xl font-bold text-primary">MD.FARHAD</a>
+      <button class="menu-btn text-primary text-2xl sm:hidden" aria-label="Toggle menu" onclick="toggleMenu()">☰</button>
+      <div class="nav-links hidden sm:flex flex-col sm:flex-row sm:items-center sm:space-x-6">
+        <a href="#home" class="nav-link active">Home</a>
+        <a href="#about" class="nav-link">About</a>
+        <a href="#skills" class="nav-link">Skills</a>
+        <a href="#projects" class="nav-link">Projects</a>
+        <a href="#contact" class="nav-link">Contact</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header id="home" class="hero-bg pt-32 pb-20 sm:pt-40 sm:pb-28 text-center" data-aos="fade-in">
+    <div class="hero-content max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="profile-img w-32 h-32 sm:w-40 sm:h-40 md:w-48 md:h-48 mx-auto rounded-full overflow-hidden border-[6px] border-[#1D4ED8] shadow-xl ring-4 ring-blue-100 transition-transform duration-300 hover:scale-105 bg-white" id="profile-img">
+        <img src="https://github.com/FDSZONE/portfolio/blob/main/FB_IMG_1686991050656.jpg?raw=true" alt="Farhad Hossen" class="w-full h-full object-cover" loading="lazy">
+      </div>
+      <h1 class="mb-4" data-aos="zoom-in">MD.Farhad Hossen</h1>
+      <p class="max-w-2xl mx-auto mb-8" data-aos="fade-up" data-aos-delay="100">
+        🎓 Mathematics Graduate 📊 Data Analyst  🎨 Digital Creator  ❤️ Volunteer
+      </p>
+      <a href="#contact" class="btn" data-aos="fade-up" data-aos-delay="200">Get in Touch</a>
+    </div>
+  </header>
+
+  <!-- About Section -->
+  <section id="about" class="py-20" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="section-header text-center">About Me</h2>
+      <div class="card p-6 sm:p-8">
+        <p>
+          I’m Farhad, a Mathematics student at Jahangirnagar University with a strong background in data analysis, documentation, and digital content creation. I have hands-on experience in tools such as Microsoft Office, SPSS, Kobo, and Python (Matplotlib) for data visualization. With leadership roles like Joint Secretary of the Student Association of Chuadanga and an Admin & HR internship at YSSE, I’ve developed strong organizational and reporting skills. I also create digital art and 3D animations for my YouTube channel. I am passionate about expanding my expertise in psychology, data analysis, and international research opportunities.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills" class="py-20" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="section-header text-center">Skills</h2>
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div class="card p-4 sm:p-6 text-center">MS Word</div>
+        <div class="card p-4 sm:p-6 text-center">Excel</div>
+        <div class="card p-4 sm:p-6 text-center">PowerPoint</div>
+        <div class="card p-4 sm:p-6 text-center">Data Analyst</div>
+        <div class="card p-4 sm:p-6 text-center">Event Photography</div>
+        <div class="card p-4 sm:p-6 text-center">Graphic Design</div>
+        <div class="card p-4 sm:p-6 text-center">Canva</div>
+        <div class="card p-4 sm:p-6 text-center">Digital Art & Animation</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects" class="py-20" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="section-header text-center">Projects & Experience</h2>
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="project-card card" data-aos="fade-up" data-aos-delay="100">
+          <div class="project-icon">📊</div>
+          <div class="project-content p-4">
+            <h3 class="project-title text-lg font-semibold">PhD Research Contribution</h3>
+            <p class="project-desc">Contributed to academic research with data analysis and documentation.</p>
+            <a href="https://drive.google.com/drive/folders/14imS8j87ucLymSGJlkmwQ6K2NhPLW8-b?usp=drive_link" class="btn" target="_blank">View Project</a>
+          </div>
+        </div>
+        <div class="project-card card" data-aos="fade-up" data-aos-delay="200">
+          <div class="project-icon">👔</div>
+          <div class="project-content p-4">
+            <h3 class="project-title text-lg font-semibold">YSSE Internship</h3>
+            <p class="project-desc">Managed admin and HR documentation tasks during internship.</p>
+            <a href="https://drive.google.com/drive/folders/1iWz2qrzMVT4Luf12ofr7CL_LbyYhojE1?usp=drive_link" class="btn" target="_blank">View Project</a>
+          </div>
+        </div>
+        <div class="project-card card" data-aos="fade-up" data-aos-delay="300">
+          <div class="project-icon">📚</div>
+          <div class="project-content p-4">
+            <h3 class="project-title text-lg font-semibold">Boolean Algebra Report</h3>
+            <p class="project-desc">Designed a report using Python and PowerPoint for visualization.</p>
+            <a href="https://drive.google.com/drive/folders/1pKEOv-2bP1QvvozyNvNNs47Fh66kst2O?usp=drive_link" class="btn" target="_blank">View Project</a>
+          </div>
+        </div>
+        <div class="project-card card" data-aos="fade-up" data-aos-delay="400">
+          <div class="project-icon">🏛️</div>
+          <div class="project-content p-4">
+            <h3 class="project-title text-lg font-semibold">SAC-JU Activities</h3>
+            <p class="project-desc">Led organizational and creative tasks for student association.</p>
+            <a href="https://drive.google.com/drive/folders/1EYBvjYUC_Wg092mrq78thN7Si3GFn267?usp=drive_link" class="btn" target="_blank">View Work</a>
+          </div>
+        </div>
+        <div class="project-card card" data-aos="fade-up" data-aos-delay="500">
+          <div class="project-icon">🎨</div>
+          <div class="project-content p-4">
+            <h3 class="project-title text-lg font-semibold">Digital Art & Animation</h3>
+            <p class="project-desc">Created 3D animations and digital art for YouTube channel.</p>
+            <a href="https://www.youtube.com/@Bri-Studio" class="btn" target="_blank">Visit Channel</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="py-20" data-aos="fade-up">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <h2 class="section-header text-center">Get in Touch</h2>
+      <div class="contact-bar">
+        <div class="contact-item" data-link="mailto:farhad.stu2019@juniv.edu" data-type="Email">
+          <span class="icon">📧</span>
+          <div class="text-content">
+            <span class="label font-semibold">Email</span>
+            <span class="value">farhad.stu2019@juniv.edu</span>
+          </div>
+        </div>
+        <div class="contact-item" data-link="tel:+8801731130949" data-type="Cell Number">
+          <span class="icon">📱</span>
+          <div class="text-content">
+            <span class="label font-semibold">Cell Number</span>
+            <span class="value">+8801731-130949</span>
+          </div>
+        </div>
+        <div class="contact-item" data-link="tel:+8801627739293" data-type="Cell Number">
+          <span class="icon">📱</span>
+          <div class="text-content">
+            <span class="label font-semibold">Cell Number</span>
+            <span class="value">+8801627-739293</span>
+          </div>
+        </div>
+        <div class="contact-item" data-link="https://www.linkedin.com/in/farhad-stu-math/" data-type="LinkedIn">
+          <span class="icon">🔗</span>
+          <div class="text-content">
+            <span class="label font-semibold">LinkedIn</span>
+            <span class="value">farhad-stu-math</span>
+          </div>
+        </div>
+        <div class="contact-item" data-link="https://www.youtube.com/@Bri-Studio" data-type="YouTube">
+          <span class="icon">📺</span>
+          <div class="text-content">
+            <span class="label font-semibold">YouTube</span>
+            <span class="value">Bri-Studio</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3D Modal -->
+    <div id="contactModal" class="modal">
+      <div class="modal-content">
+        <span class="modal-close">×</span>
+        <h3 id="modalTitle" class="text-xl font-semibold"></h3>
+        <p id="modalLink" class="text-gray-600"></p>
+        <button id="modalOpenBtn" class="modal-button">Connect Now</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="bg-[var(--footer-bg)] text-gray-700 text-center py-4 border-t border-gray-200">
+    <p class="text-sm sm:text-base font-medium tracking-wide">
+      © 2025 <span class="font-semibold">MD.Farhad Hossen</span>. All rights reserved.
+    </p>
+  </footer>
+
+  <!-- Back to Top Button -->
+  <button class="back-to-top" id="backToTop" aria-label="Back to top" title="Back to Top">↑</button>
+
+  <!-- Scripts -->
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+  <script>
+    // Initialize AOS
+    AOS.init({
+      duration: 800,
+      once: true,
+      offset: 100,
+    });
+
+    // Preloader
+    window.addEventListener('load', () => {
+      const preloader = document.getElementById('preloader');
+      setTimeout(() => {
+        preloader.classList.add('hidden');
+      }, 600);
+    });
+
+    // 3D Navbar Scroll Effect
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 50) {
+        navbar.classList.add('scrolled');
+      } else {
+        navbar.classList.remove('scrolled');
+      }
+    });
+
+    // Active Nav Link Highlighting
+    const sections = document.querySelectorAll('section');
+    const navLinks = document.querySelectorAll('.nav-link');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const sectionTop = section.offsetTop - 100;
+        if (pageYOffset >= sectionTop) {
+          current = section.getAttribute('id');
+        }
+      });
+
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href').substring(1) === current) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // Smooth Scroll
+    navLinks.forEach(link => {
+      link.addEventListener('click', (e) => {
+        e.preventDefault();
+        const targetId = link.getAttribute('href').substring(1);
+        const targetSection = document.getElementById(targetId);
+        targetSection.scrollIntoView({ behavior: 'smooth' });
+        if (window.innerWidth <= 640) {
+          toggleMenu();
+        }
+      });
+    });
+
+    // Toggle Mobile Menu
+    function toggleMenu() {
+      const navLinks = document.querySelector('.nav-links');
+      const menuBtn = document.querySelector('.menu-btn');
+      navLinks.classList.toggle('active');
+      menuBtn.classList.toggle('active');
+    }
+
+    // Back to Top Button
+    const backToTop = document.getElementById('backToTop');
+    window.addEventListener('scroll', () => {
+      if (window.pageYOffset > 300) {
+        backToTop.classList.add('show');
+      } else {
+        backToTop.classList.remove('show');
+      }
+    });
+
+    backToTop.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Dynamic 3D Profile Image
+    const profileImg = document.getElementById('profile-img');
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      profileImg.style.transform = `rotateY(${x}deg) rotateX(${-y}deg) translateZ(30px)`;
+    });
+
+    // Dynamic 3D Project Cards
+    const projectCards = document.querySelectorAll('.project-card');
+    projectCards.forEach(card => {
+      card.addEventListener('mousemove', (e) => {
+        const rect = card.getBoundingClientRect();
+        const x = (e.clientX - rect.left - rect.width / 2) / 20;
+        const y = (e.clientY - rect.top - rect.height / 2) / 20;
+        card.style.transform = `translateY(-10px) rotateX(${-y}deg) rotateY(${x}deg) translateZ(20px)`;
+      });
+      card.addEventListener('mouseleave', () => {
+        card.style.transform = 'translateY(0) rotateX(0) rotateY(0) translateZ(0)';
+      });
+    });
+
+    // Contact Modal
+    document.addEventListener('DOMContentLoaded', () => {
+      const contactItems = document.querySelectorAll('.contact-item');
+      const modal = document.getElementById('contactModal');
+      const modalContent = document.querySelector('.modal-content');
+      const modalTitle = document.getElementById('modalTitle');
+      const modalLink = document.getElementById('modalLink');
+      const modalOpenBtn = document.getElementById('modalOpenBtn');
+      const modalClose = document.querySelector('.modal-close');
+
+      contactItems.forEach(item => {
+        item.addEventListener('click', () => {
+          const link = item.getAttribute('data-link');
+          const type = item.getAttribute('data-type');
+
+          modalTitle.textContent = `Connect via ${type}`;
+          modalLink.textContent = link.replace(/^https?:\/\//, '').replace(/^mailto:/, '').replace(/^tel:/, '');
+          modalOpenBtn.setAttribute('data-href', link);
+
+          modal.style.display = 'flex';
+          modalContent.classList.add('show');
+        });
+      });
+
+      modalOpenBtn.addEventListener('click', () => {
+        const href = modalOpenBtn.getAttribute('data-href');
+        window.open(href, '_blank', 'noopener,noreferrer');
+        modal.style.display = 'none';
+        modalContent.classList.remove('show');
+      });
+
+      modalClose.addEventListener('click', () => {
+        modal.style.display = 'none';
+        modalContent.classList.remove('show');
+      });
+
+      modal.addEventListener('click', e => {
+        if (e.target === modal) {
+          modal.style.display = 'none';
+          modalContent.classList.remove('show');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
